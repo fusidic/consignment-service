@@ -103,6 +103,7 @@ func main() {
 	// Init will parse the command line flags.
 	srv.Init()
 
+	// 创建vessel-service，远程调用/vessel-service/main.go中实现的方法
 	vesselClient := vesselProto.NewVesselServiceClient("vessel", srv.Client())
 
 	// Register handler
