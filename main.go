@@ -38,7 +38,7 @@ func main() {
 	}
 	defer client.Disconnect(context.Background())
 
-	// 从MongoDB中读取需要shippy数据库中的consignments
+	// 从shippy数据库中读取 collection consignments
 	consignmentCollection := client.Database("shippy").Collection("consignments")
 
 	repository := &MongoRepository{consignmentCollection}
