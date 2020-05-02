@@ -1,0 +1,40 @@
+# docker-compose.yml
+version: '3.5'
+
+services:
+  consignment-service:
+    restart: always # ensures the container will restart on crash
+    container_name: "consignment-service"
+    build: .
+    ports:
+      - 50051 # exposing this port on the docker network only, not host
+    links:
+      - datastore
+    depends_on:
+      - datastore
+    networks:
+      - backend-tier
+      - consignment-tier
+    environment:
+      DB_HOST: "mongodb://datastore:27017"
+      MICRO_ADDRESS: ":50051"
+
+  datastore:
+    image: mongo:latest
+    container_name: "datastore"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db # ensures data persistence between restarting
+    networks:
+      - consignment-tier
+    ports:
+      - 27017
+    command: mongod --logpath=/dev/null
+
+networks:
+  consignment-tier:
+    name: consignment-tier
+  backend-tier:
+    name: backend-tier

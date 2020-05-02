@@ -6,7 +6,7 @@ RUN apk update && apk upgrade && \
 RUN mkdir /app
 WORKDIR /app
 
-ENV GO111MODULE=on
+ENV GO111MODULE=on GOPROXY=https://goproxy.cn
 
 COPY . .
 
