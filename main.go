@@ -70,6 +70,10 @@ func main() {
 // 认证通过，返回的函数继续执行；认证不通过，报错并返回
 func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 	return func(ctx context.Context, req server.Request, rsp interface{}) error {
+		// 通过环境变量 DISABLE_AUTH 确认是否需要跳过认证服务
+		if os.Getenv("DISABLE_AUTH") == "true" {
+			return fn(ctx, req, rsp)
+		}
 		meta, ok := metadata.FromContext(ctx)
 		if !ok {
 			return errors.New("no auth metadata found in request")
