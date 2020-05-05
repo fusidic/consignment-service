@@ -4,6 +4,7 @@ import (
 	"context"
 
 	pb "github.com/fusidic/consignment-service/proto/consignment"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -115,7 +116,7 @@ func (repository *MongoRepository) Create(ctx context.Context, consignment *Cons
 // GetAll 获取数据库中所有Consignment信息，return with []*Consignment, error
 func (repository *MongoRepository) GetAll(ctx context.Context) ([]*Consignment, error) {
 	// 直接调用 mongo.Collection 的 Find 方法，filter: nil
-	cur, err := repository.collection.Find(ctx, nil, nil)
+	cur, err := repository.collection.Find(ctx, bson.D{}, nil)
 	var consignments []*Consignment
 	for cur.Next(ctx) {
 		var consignment *Consignment
