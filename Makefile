@@ -5,7 +5,7 @@ build:
 	docker build -t consignment-service .
 
 run:
-	docker run -p 50051:50051 \
+	docker run --net="host" \
 		-e MICRO_SERVER_ADDRESS=:50051 \
 		-e MICRO_REGISTRY=mdns \
 		-e DISABLE_AUTH=true \

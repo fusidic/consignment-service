@@ -27,7 +27,7 @@ func main() {
 	srv := micro.NewService(
 
 		// Name 必须要和 consignment.proto 中的包名保持一致
-		micro.Name("consignment"),
+		micro.Name("shippy.consignment"),
 		micro.Version("latest"),
 		// 认证服务的中间件
 		micro.WrapHandler(AuthWrapper),
